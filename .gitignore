@@ -1,17 +1,39 @@
-# 密钥配置文件
+# 密钥配置文件（只屏蔽真实密钥，.env.example模板不受影响）
 .env
-# 数据库文件
-data/*.db
+# 运行生成的数据库目录（整文件夹忽略）
+data/
+
 # Python缓存
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-# 虚拟环境（后面服务器会新建，不用上传）
+# 虚拟环境（服务器重新创建）
 venv/
+
 # 日志、临时文件
 *.log
 tmp/
+*.tmp
+
 # 系统垃圾文件
 .DS_Store
 Thumbs.db
+
+# Windows本地快捷脚本（Linux服务器无用）
+*.bat
+*.ps1
+*.vbs
+# 本地桌面图标资源
+*.ico
+
+# IDE编辑器配置（VSCode/PyCharm）
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 压缩打包临时文件
+*.zip
+*.tar
+*.gz

@@ -58,7 +58,7 @@ uiToggleBtn.addEventListener('click', () => {
 });
 
 const savedTheme = localStorage.getItem(THEME_KEY);
-applyTheme(savedTheme && THEMES.includes(savedTheme) ? savedTheme : 'v2');
+applyTheme(savedTheme && THEMES.includes(savedTheme) ? savedTheme : 'v5');
 
 // ---- 数据状态 ----
 function setDataState(hasData) {

@@ -1,0 +1,7 @@
+# AI Morning Brief - backend dependencies
+# Install (China mirror to avoid network issues):
+#   pip install -i https://mirrors.aliyun.com/pypi/simple/ -r backend/requirements.txt
+fastapi            # Web framework
+uvicorn[standard]  # ASGI server
+zhipuai            # Zhipu GLM official Python SDK (used in stage 2)
+python-dotenv      # load .env config

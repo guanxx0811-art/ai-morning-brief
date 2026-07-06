@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell *)",
+      "WebSearch",
+      "Bash(dir D:\\\\开发\\\\ai-morning-brief\\\\frontend *)"
+    ]
+  }
+}

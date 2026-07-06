@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 晨报</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style-v2.css">
+  <link rel="stylesheet" href="/static/style-v3.css">
+  <link rel="stylesheet" href="/static/style-v4.css">
+  <link rel="stylesheet" href="/static/style-v5.css">
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <div class="brand">
+        <h1 class="site-title">AI 晨报</h1>
+        <span class="slogan">每天 5 分钟，和世界 AI 对齐</span>
+        <span id="mastheadSubtitle" class="masthead-subtitle"></span>
+      </div>
+      <div class="controls">
+        <input type="date" id="datePicker" class="date-picker">
+        <button id="fetchBtn" class="fetch-btn">获取今日资讯</button>
+        <button id="uiToggleBtn" class="ui-toggle-btn">报纸排版</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="loading" class="loading" style="display:none;">
+      <div class="spinner"></div>
+      <p>正在获取资讯，请稍候…</p>
+    </div>
+
+    <div id="emptyState" class="empty-state" style="display:none;">
+      <div class="empty-icon">📭</div>
+      <p>这一天还没有资讯</p>
+      <button class="fetch-btn" onclick="fetchAndReload()">点击获取</button>
+    </div>
+
+    <section id="overviewSection" class="overview-card" style="display:none;">
+      <h2 class="overview-title">📋 今日总览</h2>
+      <p id="overviewText" class="overview-text"></p>
+    </section>
+
+    <div id="categoriesContainer"></div>
+
+    <footer id="batchFooter" class="batch-footer" style="display:none;">
+      <span id="batchInfo"></span>
+    </footer>
+
+    <!-- V4 底部模块（其他主题下隐藏） -->
+    <div id="bottomSection" class="bottom-section" style="display:none;">
+      <div class="bottom-links">
+        <a href="#" class="bottom-link" onclick="datePicker.stepDown(1);datePicker.dispatchEvent(new Event('change'));return false;">← 前一天</a>
+        <a href="#" class="bottom-link" onclick="datePicker.stepUp(1);datePicker.dispatchEvent(new Event('change'));return false;">后一天 →</a>
+        <button class="subscribe-btn" onclick="alert('订阅功能将在二期上线')">订阅推送</button>
+      </div>
+      <div class="copyright">AI 晨报 · 每天5分钟，和世界AI对齐</div>
+    </div>
+  </main>
+
+  <!-- V4 回到顶部按钮 -->
+  <button id="backToTop" class="back-to-top" style="display:none;">↑</button>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

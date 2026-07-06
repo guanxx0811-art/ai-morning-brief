@@ -1,0 +1,381 @@
+/* ================================================================
+   AI 晨报 V5 — 融合版
+   横线以上（刊头）+ 今日总览：V4 风格（酒红、左右分栏、浅灰总览背景）
+   今日总览以下（分类 + 资讯）：V2 风格（"01 / 大模型"、宋体标题、细线分隔）
+   全局用酒红 #8B4D52 保持色彩统一。
+   ================================================================ */
+
+:root {
+  --v5-accent: #8B4D52;
+  --v5-accent-light: #A6656B;
+  --v5-bg: #FAFAF7;
+  --v5-text: #1A1A1A;
+  --v5-text-sec: #6B6B66;
+  --v5-divider: #D4D2CB;
+  --v5-gray-bg: #F3F2EE;
+  --v5-radius: 4px;
+}
+
+/* ---------- 基础 ---------- */
+body.theme-v5 {
+  background: var(--v5-bg);
+  color: var(--v5-text);
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-weight: 400;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ========== 以下来自 V4：刊头 + 横线 ========== */
+
+body.theme-v5 .top-bar {
+  background: var(--v5-bg);
+  border-bottom: 1px solid var(--v5-divider);
+  box-shadow: none;
+}
+
+body.theme-v5 .top-bar::after { display: none; }
+
+body.theme-v5 .top-bar-inner {
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 28px 0 16px;
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+body.theme-v5 .brand {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+body.theme-v5 .site-title {
+  font-family: 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif;
+  font-weight: 700;
+  font-size: 44px;
+  color: var(--v5-text);
+  letter-spacing: 0.12em;
+  line-height: 1.1;
+}
+
+body.theme-v5 .slogan { display: none; }
+
+body.theme-v5 .masthead-subtitle {
+  display: block;
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 12px;
+  color: var(--v5-text-sec);
+  letter-spacing: 0.05em;
+}
+
+body.theme-v5 .controls {
+  margin-top: 0;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+body.theme-v5 .date-picker {
+  border: 1px solid var(--v5-divider);
+  border-radius: var(--v5-radius);
+  background: var(--v5-bg);
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--v5-text);
+  padding: 6px 10px;
+  transition: border-color 150ms ease;
+}
+body.theme-v5 .date-picker:focus {
+  border-color: var(--v5-accent);
+  outline: none;
+}
+
+body.theme-v5 .fetch-btn {
+  background: var(--v5-accent);
+  color: #FAFAF7;
+  border-radius: var(--v5-radius);
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  padding: 7px 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  transition: background 150ms ease, transform 100ms ease;
+}
+body.theme-v5 .fetch-btn:hover {
+  background: var(--v5-accent-light);
+  transform: scale(1.02);
+}
+body.theme-v5 .fetch-btn:active { transform: scale(0.98); }
+
+body.theme-v5 .ui-toggle-btn {
+  background: transparent;
+  color: var(--v5-text-sec);
+  border: none;
+  border-radius: var(--v5-radius);
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+body.theme-v5 .ui-toggle-btn:hover {
+  color: var(--v5-accent);
+  text-decoration: underline;
+}
+
+body.theme-v5 .container {
+  max-width: 720px;
+  padding: 32px 0 60px;
+}
+
+/* ========== 以下来自 V4：今日总览 ========== */
+
+body.theme-v5 .overview-card {
+  background: var(--v5-gray-bg);
+  border-left: 2px solid var(--v5-divider);
+  border-radius: var(--v5-radius);
+  box-shadow: none;
+  padding: 20px 24px;
+  margin-bottom: 36px;
+}
+
+body.theme-v5 .overview-title {
+  font-size: 0;
+  margin: 0 0 10px;
+}
+body.theme-v5 .overview-title::before {
+  content: '今日总览';
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--v5-text-sec);
+  letter-spacing: 0.05em;
+}
+
+body.theme-v5 .overview-text {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--v5-text);
+}
+/* 无首字下沉，同 V4 */
+
+/* ========== 以下来自 V2：分类 + 资讯条目 ========== */
+/* 颜色统一用酒红 #8B4D52 替代 V2 的砖红 #C8401A */
+
+body.theme-v5 { counter-reset: cat-counter; }
+
+body.theme-v5 .category-section {
+  margin-bottom: 40px;
+  counter-increment: cat-counter;
+}
+
+body.theme-v5 .category-header {
+  border-bottom: 1px solid var(--v5-divider);
+  padding-bottom: 10px;
+  margin-bottom: 0;
+}
+
+/* "01 / 大模型" 格式（V2 布局，酒红色序号） */
+body.theme-v5 .category-tag {
+  background: transparent;
+  color: var(--v5-text);
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 15px;
+  font-weight: 400;
+  border-radius: 0;
+  padding: 0;
+  letter-spacing: 0.05em;
+}
+body.theme-v5 .category-tag::before {
+  content: counter(cat-counter, decimal-leading-zero) " / ";
+  color: var(--v5-accent);
+}
+
+/* 资讯卡片 — V2 纯排版式 */
+body.theme-v5 .article-card {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 18px 0;
+  margin: 0;
+  border-bottom: 1px solid var(--v5-divider);
+  transition: none;
+  cursor: default;
+}
+body.theme-v5 .article-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+body.theme-v5 .article-card:last-child {
+  border-bottom: none;
+}
+
+body.theme-v5 .article-title {
+  font-family: 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--v5-text);
+  margin-bottom: 6px;
+  line-height: 1.5;
+  transition: color 150ms ease;
+}
+body.theme-v5 .article-card:hover .article-title {
+  color: var(--v5-accent);
+}
+
+body.theme-v5 .article-summary {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--v5-text-sec);
+  line-height: 1.75;
+  margin-bottom: 8px;
+}
+
+body.theme-v5 .article-meta {
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--v5-text-sec);
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+body.theme-v5 .article-meta > span:not(.article-date)::before {
+  content: '来源：';
+}
+
+body.theme-v5 .article-date {
+  color: var(--v5-text-sec);
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+body.theme-v5 .article-date::before { content: ' · '; }
+
+body.theme-v5 .article-domain {
+  color: var(--v5-text-sec);
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+body.theme-v5 .article-domain::before { content: ' · '; }
+
+/* 来源等级标识 */
+body.theme-v5 .source-tier {
+  display: inline-block;
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+body.theme-v5 .tier-firsthand   { background: #E8F5E9; color: #2E7D32; }
+body.theme-v5 .tier-authoritative { background: #E3F2FD; color: #1565C0; }
+body.theme-v5 .tier-vertical    { background: #FFF8E1; color: #F57F17; }
+body.theme-v5 .tier-research    { background: #F3E5F5; color: #7B1FA2; }
+body.theme-v5 .tier-chinese     { background: #FFF3E0; color: #E65100; }
+body.theme-v5 .tier-aggregator  { background: #F5F5F5; color: #757575; }
+
+/* 新分类 tag 颜色（7类） */
+body.theme-v5 .tag-大模型\/新发布,
+body.theme-v5 .tag-大模型 { color: var(--v5-text); }
+body.theme-v5 .tag-芯片\/算力 { color: var(--v5-text); }
+body.theme-v5 .tag-AI工具\/产品 { color: var(--v5-text); }
+body.theme-v5 .tag-公司\/资本 { color: var(--v5-text); }
+body.theme-v5 .tag-政策\/监管\/安全 { color: var(--v5-text); }
+body.theme-v5 .tag-研究\/突破 { color: var(--v5-text); }
+body.theme-v5 .tag-行业应用 { color: var(--v5-text); }
+
+body.theme-v5 .article-source {
+  font-size: 0;
+  color: var(--v5-text-sec);
+  font-weight: 400;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+body.theme-v5 .article-source::before {
+  content: ' → ';
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+body.theme-v5 .article-source::after {
+  content: '原文';
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+body.theme-v5 .article-source:hover {
+  color: var(--v5-accent);
+  text-decoration: none;
+}
+
+body.theme-v5 .external-icon { display: none; }
+
+/* V4 专属元素在 V5 隐藏 */
+body.theme-v5 .article-cat-tag { display: none; }
+body.theme-v5 .article-actions  { display: none; }
+body.theme-v5 .bottom-section   { display: none; }
+body.theme-v5 .back-to-top      { display: none; }
+
+/* 底部批次信息 */
+body.theme-v5 .batch-footer {
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--v5-text-sec);
+  border-top: 1px solid var(--v5-divider);
+  margin-top: 36px;
+  padding: 20px;
+}
+
+/* Loading */
+body.theme-v5 .spinner {
+  border-color: var(--v5-divider);
+  border-top-color: var(--v5-text);
+}
+body.theme-v5 .loading p {
+  font-family: 'Noto Sans SC', sans-serif;
+  color: var(--v5-text-sec);
+}
+
+/* 空状态 */
+body.theme-v5 .empty-icon { display: none; }
+body.theme-v5 .empty-state p {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 17px;
+  color: var(--v5-text-sec);
+}
+body.theme-v5 .empty-state .fetch-btn {
+  background: var(--v5-accent);
+  border-radius: var(--v5-radius);
+}
+body.theme-v5 .empty-state .fetch-btn:hover {
+  background: var(--v5-accent-light);
+}
+
+/* ---------- 移动端 ---------- */
+@media (max-width: 600px) {
+  body.theme-v5 .top-bar-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 0 12px;
+  }
+  body.theme-v5 .site-title { font-size: 34px; }
+  body.theme-v5 .controls { width: 100%; flex-wrap: wrap; gap: 8px; }
+  body.theme-v5 .container { padding: 24px 0 40px; }
+  body.theme-v5 .overview-card { padding: 16px 18px; }
+}

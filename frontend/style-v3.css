@@ -1,0 +1,436 @@
+/* ================================================================
+   AI 晨报 V3 — 刊体
+   设计哲学：消隐。UI 退到看不见，只剩内容和排版。
+   V2 → V3 关键调整：
+     - 控制区弱化为文字级（日期可点、刷新变"↻"）
+     - 标题 22px vs 摘要 14px，敢于拉开
+     - 分割线更轻（#EFEDE7）
+     - 左对齐刊头（非居中）
+     - 有数据时刷新按钮极度弱化
+   配色/字体与 V2 相同，只调整层级和权重。
+   ================================================================ */
+
+/* ---------- 1. 基础 ---------- */
+body.theme-v3 {
+  background: #FAFAF7;
+  color: #1A1A1A;
+  font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-weight: 400;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- 2. 刊头（左对齐，更紧凑） ---------- */
+body.theme-v3 .top-bar {
+  background: #FAFAF7;
+  border-bottom: none;
+  box-shadow: none;
+}
+
+/* 双线：1.5px 粗 + 0.5px 细（比 V2 更精致） */
+body.theme-v3 .top-bar::after {
+  content: '';
+  display: block;
+  max-width: 720px;
+  margin: 18px auto 0;
+  height: 4px;
+  background:
+    linear-gradient(to bottom,
+      #1A1A1A 1.5px,
+      transparent 1.5px,
+      transparent 3px,
+      #1A1A1A 3px,
+      #1A1A1A 4px
+    );
+}
+
+body.theme-v3 .top-bar-inner {
+  flex-direction: column;
+  align-items: flex-start;         /* 左对齐，非居中 */
+  padding: 32px 24px 0;
+  gap: 0;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+body.theme-v3 .brand {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+}
+
+body.theme-v3 .site-title {
+  font-family: 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif;
+  font-weight: 700;
+  font-size: 36px;                 /* 比 V2 的 44px 更克制 */
+  color: #1A1A1A;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+}
+
+body.theme-v3 .slogan { display: none; }
+
+body.theme-v3 .masthead-subtitle {
+  display: block;
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 12px;
+  color: #6B6B66;
+  letter-spacing: 0.05em;
+}
+
+/* ---------- 3. 控制区：弱化为文字级 ---------- */
+body.theme-v3 .controls {
+  margin-top: 8px;
+  margin-bottom: 0;
+  gap: 14px;
+}
+
+/* 日期选择器：看起来像一行可点文字，不是表单控件 */
+body.theme-v3 .date-picker {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: transparent;
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 12px;
+  color: #C8401A;                  /* 强调色 = 可点击信号 */
+  cursor: pointer;
+  padding: 0;
+  letter-spacing: 0.05em;
+  transition: opacity 150ms ease;
+  outline: none;
+}
+body.theme-v3 .date-picker:hover { opacity: 0.7; }
+body.theme-v3 .date-picker:focus { opacity: 0.7; }
+
+/* 保留浏览器日期下拉的小箭头（否则用户不知道可点） */
+body.theme-v3 .date-picker::-webkit-calendar-picker-indicator {
+  opacity: 0.3;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+/* 刷新按钮：默认极弱，有数据时只留 "↻" */
+body.theme-v3 .fetch-btn {
+  background: transparent;
+  color: #6B6B66;
+  border: none;
+  border-radius: 0;
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  padding: 0;
+  transition: color 150ms ease;
+}
+body.theme-v3 .fetch-btn:hover { color: #C8401A; }
+body.theme-v3 .fetch-btn:active { transform: none; }
+
+/* 有数据时：刷新按钮只显示 ↻ 符号 */
+body.theme-v3.has-data .fetch-btn {
+  font-size: 0;
+}
+body.theme-v3.has-data .fetch-btn::before {
+  content: '↻';
+  font-size: 14px;
+}
+
+/* 无数据时：刷新按钮稍醒目（下划线暗示可操作） */
+body.theme-v3.no-data .fetch-btn {
+  color: #1A1A1A;
+  border-bottom: 1px solid #1A1A1A;
+  padding-bottom: 1px;
+  font-size: 12px;
+}
+
+/* 切换按钮：纯文字 */
+/* 切换按钮 — V3 风格 */
+body.theme-v3 .ui-toggle-btn {
+  background: transparent;
+  color: #6B6B66;
+  border: none;
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  padding: 0;
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+body.theme-v3 .ui-toggle-btn:hover { color: #C8401A; }
+
+/* ---------- 4. 内容区 ---------- */
+body.theme-v3 .container {
+  max-width: 720px;
+  padding: 28px 24px 60px;
+}
+
+/* ---------- 5. 今日总览（更克制） ---------- */
+body.theme-v3 .overview-card {
+  background: transparent;
+  border-left: 2px solid #C8401A;   /* 比 V2 的 3px 更细 */
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0 0 0 16px;
+  margin-bottom: 44px;
+}
+
+body.theme-v3 .overview-title {
+  font-size: 0;
+  margin: 0 0 8px;
+}
+body.theme-v3 .overview-title::before {
+  content: '今日总览';
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  color: #6B6B66;
+  letter-spacing: 0.05em;
+}
+
+body.theme-v3 .overview-text {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: #1A1A1A;
+}
+
+/* 首字下沉（比 V2 稍小） */
+body.theme-v3 .overview-text::first-letter {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 2.6em;
+  float: left;
+  line-height: 0.9;
+  margin-right: 6px;
+  margin-top: 3px;
+  font-weight: 700;
+  color: #1A1A1A;
+}
+
+/* ---------- 6. 分类区块 ---------- */
+body.theme-v3 { counter-reset: cat-counter; }
+
+body.theme-v3 .category-section {
+  margin-bottom: 44px;
+  counter-increment: cat-counter;
+}
+
+body.theme-v3 .category-header {
+  border-bottom: 1px solid #EFEDE7;  /* 比 V2 更轻 */
+  padding-bottom: 8px;
+  margin-bottom: 0;
+}
+
+body.theme-v3 .category-tag {
+  background: transparent;
+  color: #1A1A1A;
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 15px;
+  font-weight: 400;
+  border-radius: 0;
+  padding: 0;
+  letter-spacing: 0.05em;
+}
+body.theme-v3 .category-tag::before {
+  content: counter(cat-counter, decimal-leading-zero) " / ";
+  color: #C8401A;
+}
+
+/* ---------- 7. 资讯条目——敢于拉开标题与摘要 ---------- */
+body.theme-v3 .article-card {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 14px 0;
+  margin: 0;
+  border-bottom: 1px solid #EFEDE7;
+  transition: none;
+  cursor: default;
+}
+body.theme-v3 .article-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+body.theme-v3 .article-card:last-child {
+  border-bottom: none;
+}
+
+/* 22px 宋体标题——核心视觉锚点 */
+body.theme-v3 .article-title {
+  font-family: 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif;
+  font-weight: 600;
+  font-size: 22px;                   /* V2 是 20px，拉开 */
+  color: #1A1A1A;
+  margin-bottom: 5px;
+  line-height: 1.45;
+  transition: color 100ms ease;
+}
+body.theme-v3 .article-card:hover .article-title {
+  color: #C8401A;
+}
+
+/* 14px 无衬线摘要——退到背景 */
+body.theme-v3 .article-summary {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-weight: 400;
+  font-size: 14px;                   /* V2 是 15px，压下来 */
+  color: #6B6B66;
+  line-height: 1.75;
+  margin-bottom: 6px;
+}
+
+/* 等宽来源行 */
+body.theme-v3 .article-meta {
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: #6B6B66;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+body.theme-v3 .article-meta > span:not(.article-date)::before {
+  content: '来源：';
+}
+
+/* "来源 → 原文" 格式 */
+body.theme-v3 .article-source {
+  font-size: 0;
+  color: #6B6B66;
+  font-weight: 400;
+  text-decoration: none;
+  transition: color 100ms ease;
+}
+body.theme-v3 .article-source::before {
+  content: ' → ';
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+body.theme-v3 .article-source::after {
+  content: '原文';
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+body.theme-v3 .article-source:hover {
+  color: #C8401A;
+  text-decoration: none;
+}
+
+body.theme-v3 .external-icon { display: none; }
+
+/* 发布日期 */
+body.theme-v3 .article-date {
+  color: #6B6B66;
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+body.theme-v3 .article-date::before { content: ' · '; }
+
+/* 来源域名 */
+body.theme-v3 .article-domain {
+  color: #6B6B66;
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+body.theme-v3 .article-domain::before { content: ' · '; }
+
+body.theme-v3 .source-tier {
+  display: inline-block;
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+body.theme-v3 .tier-firsthand   { background: #E8F5E9; color: #2E7D32; }
+body.theme-v3 .tier-authoritative { background: #E3F2FD; color: #1565C0; }
+body.theme-v3 .tier-vertical    { background: #FFF8E1; color: #F57F17; }
+body.theme-v3 .tier-research    { background: #F3E5F5; color: #7B1FA2; }
+body.theme-v3 .tier-chinese     { background: #FFF3E0; color: #E65100; }
+body.theme-v3 .tier-aggregator  { background: #F5F5F5; color: #757575; }
+
+/* ---------- 8. 底部 ---------- */
+body.theme-v3 .batch-footer {
+  font-family: 'JetBrains Mono', 'Menlo', monospace;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: #6B6B66;
+  border-top: 1px solid #EFEDE7;
+  margin-top: 32px;
+  padding: 14px 0;
+}
+
+/* ---------- 9. Loading ---------- */
+body.theme-v3 .spinner {
+  border-color: #EFEDE7;
+  border-top-color: #1A1A1A;
+}
+body.theme-v3 .loading p {
+  font-family: 'Noto Sans SC', sans-serif;
+  color: #6B6B66;
+  font-size: 13px;
+}
+
+/* ---------- 10. 空状态 ---------- */
+body.theme-v3 .empty-icon { display: none; }
+
+body.theme-v3 .empty-state p {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px;
+  color: #6B6B66;
+}
+
+body.theme-v3 .empty-state .fetch-btn {
+  color: #1A1A1A;
+  border-bottom: 1px solid #1A1A1A;
+  padding-bottom: 1px;
+  font-size: 12px;
+}
+body.theme-v3 .empty-state .fetch-btn:hover {
+  color: #C8401A;
+  border-color: #C8401A;
+}
+
+/* ---------- 11. 移动端 ---------- */
+@media (max-width: 600px) {
+  body.theme-v3 .top-bar-inner {
+    padding: 20px 16px 0;
+  }
+
+  body.theme-v3 .site-title {
+    font-size: 28px;
+    letter-spacing: 0.06em;
+  }
+
+  body.theme-v3 .controls {
+    flex-wrap: wrap;
+  }
+
+  body.theme-v3 .container {
+    padding: 20px 16px 40px;
+  }
+
+  body.theme-v3 .overview-text {
+    font-size: 16px;
+  }
+
+  body.theme-v3 .overview-text::first-letter {
+    font-size: 2.2em;
+  }
+
+  body.theme-v3 .article-title {
+    font-size: 19px;
+  }
+
+  body.theme-v3 .article-summary {
+    font-size: 13px;
+  }
+}
